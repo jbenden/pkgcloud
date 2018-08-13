@@ -1,6 +1,16 @@
 ## Installation
 
-    $ go get github.com/edwarnicke/pkgcloud/
+[Setup a Go Environment if you don't have one already](https://golang.org/doc/install)
+
+Then go get the pkgcloud
+```bash
+go get github.com/edwarnicke/pkgcloud/
+```
+
+You should now find:
+```bash
+ls ${GOPATH}/bin/pkgcloud
+```
 
 ## Client Usage
 
