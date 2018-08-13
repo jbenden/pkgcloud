@@ -29,31 +29,35 @@ The template is in [Go template format](https://golang.org/pkg/text/template/)
 
 The following fields are available:
 
-* {{.Name}} - The name of the package - Example: "jake"
-* {{.CreatedAt}} - When the package was uploaded - Example: ""2017-03-13T02:49:29.000Z""
-* {{.Epoch}} - The epoch of the package (if available) - Example: 0
-* {{.Scope}} - The scope of the package (if available)- Example: null
-* {{.Private}} - Whether or not the package is in a private repository - Example: false
-* {{.UploaderName}} -  The name of the uploader for the package. - Example: "test_user"
-* {{.Indexed}} - Whether or not this package has been indexed. - Example: false
-* {{.RepositoryHTMLURL}} -  The HTML url of the repository. - Example: "/test_user/test_repo"
-* {{.DownloadDetailsURL}} -   The url to get access log details for package downloads. - Example: "/api/v1/repos/test_user/test_repo/package/rpm/fedora/22/jake/x86_64/1.0/1.el6/stats/downloads/detail.json"
-* {{.DownloadSeriesURL}} - The url to get time series data for package downloads. - Example: "/api/v1/repos/test_user/test_repo/package/rpm/fedora/22/jake/x86_64/1.0/1.el6/stats/downloads/series/daily.json"
-* {{.DownloadCountURL}} - The url to get the total number of package downloads.  - Example: "/api/v1/repos/test_user/test_repo/package/rpm/fedora/22/jake/x86_64/1.0/1.el6/stats/downloads/count.json"
-* {{.PromoteURL}} - The url for promoting this to another repository. - Example: "/api/v1/repos/test_user/test_repo/fedora/22/jake-1.0-1.el6.x86_64.rpm/promote.json"
-* {{.DestroyURL}} -  The url for the HTTP DELETE request to destroy this package - Example: "/api/v1/repos/test_user/test_repo/fedora/22/jake-1.0-1.el6.x86_64.rpm"
-* {{.Filename}} - The filename of the package.   Example: "jake-1.0-1.el6.x86_64.rpm"
-* {{.DistroVersion}} - The distro_version for the package. - "fedora/22"
-* {{.Version}} - The version of the package. - Example: "1.0"
-* {{.Release}} - The release of the package (if available) - "1.el6"
-* {{.Type}} - The type of package ("deb", "gem", or "rpm"). - Example: "rpm"
-* {{.PackageURL}} - The API url for this package - Example: "/api/v1/repos/test_user/test_repo/package/rpm/fedora/22/jake/x86_64/1.0/1.el6.json"
-* {{.PackageHTMLURL }} - The HTML url for this package - Example: "/test_user/test_repo/packages/fedora/22/jake-1.0-1.el6.x86_64.rpm"
+| Template                | Description                                                 | Example                                                                                                             |
+|-------------------------|-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| {{.Name}}               | The name of the package                                     | "jake"                                                                                                              |
+| {{.CreatedAt}}          | When the package was uploaded                               | "2017-03-13T02:49:29.000Z"                                                                                          |
+| {{.Epoch}}              | The epoch of the package (if available)                     | 0                                                                                                                   |
+| {{.Scope}}              | The scope of the package (if available)                     | null                                                                                                                |
+| {{.Private}}            | Whether or not the package is in a private repository       | false                                                                                                               |
+| {{.UploaderName}}       | The name of the uploader for the package.                   | "test_user"                                                                                                         |
+| {{.Indexed}}            | Whether or not this package has been indexed.               | false                                                                                                               |
+| {{.RepositoryHTMLURL}}  | The HTML url of the repository.                             | "/test_user/test_repo"                                                                                              |
+| {{.DownloadDetailsURL}} | The url to get access log details for package downloads.    | "/api/v1/repos/test_user/test_repo/package/rpm/fedora/22/jake/x86_64/1.0/1.el6/stats/downloads/detail.json"         |
+| {{.DownloadSeriesURL}}  | The url to get time series data for package downloads.      | "/api/v1/repos/test_user/test_repo/package/rpm/fedora/22/jake/x86_64/1.0/1.el6/stats/downloads/series/daily.json"   |
+| {{.DownloadCountURL}}   | The url to get the total number of package downloads.       | "/api/v1/repos/test_user/test_repo/package/rpm/fedora/22/jake/x86_64/1.0/1.el6/stats/downloads/count.json"          |
+| {{.PromoteURL}}         | The url for promoting this to another repository.           | "/api/v1/repos/test_user/test_repo/fedora/22/jake-1.0-1.el6.x86_64.rpm/promote.json"                                |
+| {{.DestroyURL}}         | The url for the HTTP DELETE request to destroy this package | "/api/v1/repos/test_user/test_repo/fedora/22/jake-1.0-1.el6.x86_64.rpm"                                             |
+| {{.Filename}}           | The filename of the package.                                | "jake-1.0-1.el6.x86_64.rpm"                                                                                         |
+| {{.DistroVersion}}      | The distro_version for the package.                         | "fedora/22"                                                                                                         |
+| {{.Version}}            | The version of the package.                                 | "1.0"                                                                                                               |
+| {{.Release}}            | The release of the package (if available)                   | "1.el6"                                                                                                             |
+| {{.Type}}               | The type of package ("deb", "gem", or "rpm").               | "rpm"                                                                                                               |
+| {{.PackageURL}}         | The API url for this package                                | "/api/v1/repos/test_user/test_repo/package/rpm/fedora/22/jake/x86_64/1.0/1.el6.json"                                |
+| {{.PackageHTMLURL }}    | The HTML url for this package                               | "/test_user/test_repo/packages/fedora/22/jake-1.0-1.el6.x86_64.rpm"                                                 |
 
 In addition, some 'methods' are provided:
 
-* {{.DaysOld}} - Number of days since the package has been uploaded.  Derived from {{.CreatedAt}}
-* {{.Promote "user/repo"}} - Promote the package to the named repo.  Note: Does have side effects to packagecloud.io *unless* you use -d or --dry-run flags.
+| Method                   | Description                                                                                                                     |
+|--------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| {{.DaysOld}}             | Number of days since the package has been uploaded.  Derived from {{.CreatedAt}}                                                |
+| {{.Promote "user/repo"}} | Promote the package to the named repo.  Note: Does have side effects to packagecloud.io *unless* you use -d or --dry-run flags. |
 
 #### Example: Filter for only packages with {{.Release}} equal "release"
 
