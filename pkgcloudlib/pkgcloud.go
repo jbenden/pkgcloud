@@ -368,6 +368,16 @@ func (c *Client) SupportedDistros() (map[string]int, error) {
 			rv[fmt.Sprintf("%s/%s", dist.IndexName, v.IndexName)] = v.ID
 		}
 	}
+	for _, dist := range d.Dsc {
+		for _, v := range dist.Versions {
+			rv[fmt.Sprintf("%s/%s", dist.IndexName, v.IndexName)] = v.ID
+		}
+	}
+	for _, dist := range d.Rpm {
+		for _, v := range dist.Versions {
+			rv[fmt.Sprintf("%s/%s", dist.IndexName, v.IndexName)] = v.ID
+		}
+	}
 	return rv, nil
 }
 
