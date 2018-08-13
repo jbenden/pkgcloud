@@ -58,6 +58,7 @@ In addition, some 'methods' are provided:
 |--------------------------|---------------------------------------------------------------------------------------------------------------------------------|
 | {{.DaysOld}}             | Number of days since the package has been uploaded.  Derived from {{.CreatedAt}}                                                |
 | {{.Promote "user/repo"}} | Promote the package to the named repo.  Note: Does have side effects to packagecloud.io *unless* you use -d or --dry-run flags. |
+| {{.Destroy}}             | Destroy the package.  Note: Does have side effects to packagecloud.io *unless* you use -d or --dry-run flags.                   |
 
 #### Example: Filter for only packages with {{.Release}} equal "release"
 
