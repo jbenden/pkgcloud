@@ -47,12 +47,27 @@ var allCmd = &cobra.Command{
 				log.Fatalf("pagination error: %s\n", err)
 			}
 			packages = append(packages, paginatedPackages.Packages...)
-			// log.Printf("len(packages)(+%d): %d\n", len(paginatedPackages.Packages), len(packages))
 			for _, p := range paginatedPackages.Packages {
 				pack := &Package{Package: p}
 				t.Execute(os.Stdout, pack)
 			}
 			next = paginatedPackages.Next
+		}
+		if !DryRun {
+			for _, p := range packagesToDestroy {
+				err = client.DestroyFromPackage(p.Package)
+				if err != nil {
+					log.Fatalf("Error when trying to Destroy %s : %s", p.PackageHTMLURL, err)
+				}
+				log.Printf("Destroying %s\n", p.PackageHTMLURL)
+			}
+			for _, p := range packagesToPromote {
+				err = client.Promote(p.Package, repo)
+				if err != nil {
+					log.Fatalf("Error Promoting to %s : %s : %s", repo, p.PromoteURL, err)
+				}
+				log.Printf("Promoted to %s : %s\n", repo, p.PromoteURL)
+			}
 		}
 	},
 	Args:             cobra.ExactArgs(1),
@@ -70,20 +85,12 @@ type Package struct {
 	*pkgcloud.Package
 }
 
+var packagesToPromote []*Package
+
 // Promote - promote Package to repo
 func (p *Package) Promote(repo string) string {
-	if !DryRun {
-		client, err := pkgcloud.NewClient("")
-		if err != nil {
-			log.Fatalf("Error Promoting to %s : %s : %s", repo, p.PromoteURL, err)
-		}
-		err = client.Promote(p.Package, repo)
-		if err != nil {
-			log.Fatalf("Error Promoting to %s : %s : %s", repo, p.PromoteURL, err)
-		}
-		return fmt.Sprintf("Promoted to %s : %s", repo, p.PromoteURL)
-	}
-	return fmt.Sprintf("Dry Run for Promoting to %s : %s", repo, p.PromoteURL)
+	packagesToPromote = append(packagesToPromote, p)
+	return fmt.Sprintf("Marked for Promotion to %s : %s", repo, p.PromoteURL)
 }
 
 // DaysOld - Number of days old the Package is
@@ -91,18 +98,10 @@ func (p *Package) DaysOld() int {
 	return int(time.Since(p.CreatedAt).Hours() / 24)
 }
 
+var packagesToDestroy []*Package
+
 // Destroy - destroy the package referenced by pkgcloud.Package
 func (p *Package) Destroy() string {
-	if !DryRun {
-		client, err := pkgcloud.NewClient("")
-		if err != nil {
-			log.Fatalf("Error when trying to Destroy %s : %s", p.PackageHTMLURL, err)
-		}
-		err = client.DestroyFromPackage(p.Package)
-		if err != nil {
-			log.Fatalf("Error when trying to Destroy %s : %s", p.PackageHTMLURL, err)
-		}
-		return fmt.Sprintf("Destroying %s", p.PackageHTMLURL)
-	}
-	return fmt.Sprintf("Dry Run for Destroying %s", p.PackageHTMLURL)
+	packagesToDestroy = append(packagesToDestroy, p)
+	return fmt.Sprintf("Marked for Destruction %s", p.PackageHTMLURL)
 }
