@@ -61,12 +61,12 @@ var allCmd = &cobra.Command{
 				}
 				log.Printf("Destroying %s\n", p.PackageHTMLURL)
 			}
-			for _, p := range packagesToPromote {
-				err = client.Promote(p.Package, repo)
+			for p, r := range packagesToPromote {
+				err = client.Promote(p.Package, r)
 				if err != nil {
-					log.Fatalf("Error Promoting to %s : %s : %s", repo, p.PromoteURL, err)
+					log.Fatalf("Error Promoting to %s : %s : %s", r, p.PromoteURL, err)
 				}
-				log.Printf("Promoted to %s : %s\n", repo, p.PromoteURL)
+				log.Printf("Promoted to %s : %s\n", r, p.PromoteURL)
 			}
 		}
 	},
@@ -85,11 +85,11 @@ type Package struct {
 	*pkgcloud.Package
 }
 
-var packagesToPromote []*Package
+var packagesToPromote = make(map[*Package]string)
 
 // Promote - promote Package to repo
 func (p *Package) Promote(repo string) string {
-	packagesToPromote = append(packagesToPromote, p)
+	packagesToPromote[p] = repo
 	return fmt.Sprintf("Marked for Promotion to %s : %s", repo, p.PromoteURL)
 }
 
