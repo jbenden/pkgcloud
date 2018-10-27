@@ -132,7 +132,7 @@ func (c Client) CreatePackage(repo, distro, pkgFile string) error {
 type Package struct {
 	Name               string    `json:"name"`
 	CreatedAt          time.Time `json:"created_at,string"`
-	Epoch              string    `json:"epoch"`
+	Epoch              *json.RawMessage `json:"epoch,omitempty"`
 	Scope              string    `json:"scope"`
 	Private            bool      `json:"private"`
 	UploaderName       string    `json:"uploader_name"`
