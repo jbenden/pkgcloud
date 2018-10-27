@@ -13,7 +13,7 @@
 // limitations under the License.
 package main
 
-import "github.com/edwarnicke/pkgcloud/cmd"
+import "github.com/jbenden/pkgcloud/cmd"
 
 func main() {
 	cmd.Execute()

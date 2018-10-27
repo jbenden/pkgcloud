@@ -21,7 +21,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	pkgcloud "github.com/edwarnicke/pkgcloud/pkgcloudlib"
+	pkgcloud "github.com/jbenden/pkgcloud/pkgcloudlib"
 	"github.com/spf13/cobra"
 )
 

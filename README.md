@@ -4,7 +4,7 @@
 
 Then go get the pkgcloud
 ```bash
-go get github.com/edwarnicke/pkgcloud/
+go get github.com/jbenden/pkgcloud/
 ```
 
 You should now find:

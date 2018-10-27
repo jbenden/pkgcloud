@@ -16,7 +16,7 @@ import (
 
 	"github.com/go-errors/errors"
 
-	"github.com/edwarnicke/pkgcloud/pkgcloudlib/upload"
+	"github.com/jbenden/pkgcloud/pkgcloudlib/upload"
 	"github.com/tomnomnom/linkheader"
 )
 
