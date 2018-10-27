@@ -16,7 +16,7 @@ package cmd
 
 import (
 	"fmt"
-	"html/template"
+	"text/template"
 	"log"
 	"os"
 	"time"
