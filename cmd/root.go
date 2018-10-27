@@ -45,6 +45,7 @@ func Execute() {
 func init() {
 	rootCmd.PersistentFlags().BoolVarP(&DryRun, "dry-run", "d", false, "Do not take actions that change the state of packagecloud.io")
 	rootCmd.AddCommand(allCmd)
+    rootCmd.AddCommand(destroyCmd)
 	rootCmd.AddCommand(distributionsCmd)
 	rootCmd.AddCommand(pushCmd)
 }
