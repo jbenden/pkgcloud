@@ -383,7 +383,7 @@ func (c *Client) SupportedDistros() (map[string]int, error) {
 
 // Exists - Check to see if <repo>/<distro>/packageFilename exists in packagecloud.io
 func (c *Client) Exists(repo, distro, packageFilename string) (bool, error) {
-	endpoint := fmt.Sprintf("%s/%s/packages/%s/%s", ServiceBaseURL, repo, distro, packageFilename)
+	endpoint := fmt.Sprintf("%s%s/packages/%s/%s", ServiceBaseURL, repo, distro, packageFilename)
 
 	req, err := http.NewRequest("HEAD", endpoint, nil)
 	if err != nil {
